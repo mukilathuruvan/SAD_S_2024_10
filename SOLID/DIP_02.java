@@ -20,15 +20,16 @@ public class DIP_02 {
     }
 
     public static class Employee {
-        private EmailNotification emailNotification;
 
-        // Dependency Injection (again) composition
-        public Employee(EmailNotification emailNotification) {
-            this.emailNotification = emailNotification;
+        //  Now this class depends on the abstraction (Notification) rather than a concrete implementation (EmailNotification)
+        private Notification notification;
+
+        public Employee(Notification notification) {
+            this.notification = notification;
         }
     
         public void notifyEmployee() {
-            emailNotification.doNotify();
+            notification.doNotify();
         }
     }
 
