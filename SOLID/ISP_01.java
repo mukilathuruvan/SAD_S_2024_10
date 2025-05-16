@@ -1,4 +1,3 @@
-package SOLID;
 
 public class ISP_01 {
 
@@ -8,32 +7,56 @@ public class ISP_01 {
      * simple one.
      * Please fix this to obey the ISP (Interface Segregation Principle)!
      */
-    
+
+
+    // Separated interfaces for specific functionalities
     public static interface Printer {
         void printDocument();
-        void scanDocument();
-        void faxDocument();    
     }
 
+    public static interface Scanner {
+        void scanDocument();
+    }
+
+    public static interface Fax {
+        void faxDocument();
+    }
+
+
+    // Implementation of only Printer interface
     public static class SimplePrinter implements Printer {
         @Override
+        public void printDocument() {
+            System.out.println("Sending document to the printer ...");
+        }
+    }
+
+
+    // Implementations of all interfaces since this is multi-functional printer
+    public static class MultiFunctionPrinter implements Printer, Scanner, Fax{
+         @Override
         public void printDocument() {
             System.out.println("Sending document to the printer ...");
         }
 
         @Override
         public void scanDocument() {
-            throw new UnsupportedOperationException("Unimplemented method 'scanDocument'");
+            System.out.println("Scanning document to the scanner ...");
         }
 
         @Override
         public void faxDocument() {
-            throw new UnsupportedOperationException("Unimplemented method 'faxDocument'");
-        }        
+            System.out.println("Sending document to the fax machine...");
+        }
     }
 
     public static void main(String[] args) {
         SimplePrinter printer = new SimplePrinter();
         printer.printDocument();
+
+        MultiFunctionPrinter multiFunctionPrinter=new MultiFunctionPrinter();
+        multiFunctionPrinter.printDocument();
+        multiFunctionPrinter.scanDocument();
+        multiFunctionPrinter.faxDocument();
     }
 }
