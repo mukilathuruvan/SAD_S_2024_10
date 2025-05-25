@@ -1,4 +1,3 @@
-package SOLID;
 
 public class LSP_01 {
 
@@ -10,8 +9,14 @@ public class LSP_01 {
      * setting the width and/or height. Please fix this to obey
      * the LSP (Liskov Substitution Principle).
      */
-    
-    public static class Rectangle {
+
+
+    // creating a common interface to break the inheritance chain
+    public interface Shape {
+        int getArea();
+    }
+
+    public static class Rectangle implements Shape {
         protected int width;
         protected int height;
 
@@ -28,27 +33,28 @@ public class LSP_01 {
             this.height = height;
         }
 
+        @Override
         public int getArea() {
             return width * height;
         }
     }
 
-    public static class Square extends Rectangle {
-        public Square(int width) {
-            super(width, width);
+    public static class Square implements Shape {
+        private int side;
+
+        public Square(int side) {
+            setSide(side);
+        }
+
+        public void setSide(int side) {
+            this.side = side;
         }
 
         @Override
-        public void setWidth(int width) {
-            this.width = width;
-            this.height = width;
+        public int getArea() {
+            return side * side;
         }
 
-        @Override
-        public void setHeight(int height) {
-            this.width = height;
-            this.height = height;
-        }
     }
 
     public static void main(String[] args) {
@@ -56,7 +62,7 @@ public class LSP_01 {
         System.out.println("Rectangle Area: " + rectangle.getArea());
 
         Square square = new Square(0);
-        square.setWidth(5);
+        square.setSide(5);
         System.out.println("Square Area: " + square.getArea());
     }
 }
