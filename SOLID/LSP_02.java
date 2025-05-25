@@ -1,7 +1,7 @@
 package SOLID;
 
 public class LSP_02 {
-    
+
     /*
      * TASK:
      * The polymorphic function move expect the same behaviour
@@ -10,12 +10,19 @@ public class LSP_02 {
      */
 
     public static class Bird {
-        public void fly() {
-            System.out.println("The bird is flying...");
+        // list of general methods
+        void eat() {
+            System.out.println("The bird is eating...");
         }
+
     }
 
-    public static class Sparrow extends Bird {
+    // ceating this interface to make sure seperate fylable from penguin
+    public interface Flyable {
+        public void fly();
+    }
+
+    public static class Sparrow extends Bird implements Flyable {
         @Override
         public void fly() {
             System.out.println("The sparrow is flying...");
@@ -23,18 +30,19 @@ public class LSP_02 {
     }
 
     public static class Penguin extends Bird {
-        @Override
-        public void fly() {
-            throw new UnsupportedOperationException("Penguins can't fly :(");
+        void swim() {
+            System.out.println("The penguin is swimming...");
         }
     }
 
-    public static void move(Bird bird) {
-        bird.fly();
+    public static void move(Flyable flyable) {
+        flyable.fly();
     }
 
     public static void main(String[] args) {
         move(new Sparrow());
-        move(new Penguin());
+
+        // move(new Penguin()); // This will not work as Penguin is
+        // not Flyable
     }
 }
